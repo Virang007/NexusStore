@@ -1,4 +1,4 @@
-# NexusStore App with Backend API - full stack application Application
+# NexusStore App with Backend API - full stack Application
 
 A complete full-stack application built with **Flutter** (frontend) and **Node.js + Express + MongoDB** (backend).
 
