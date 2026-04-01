@@ -1,6 +1,6 @@
-# NexusStore — Full Stack E-Commerce App
+# NexusStore App with Backend API - full stack application Application
 
-A complete full-stack e-commerce application built with **Flutter** (frontend) and **Node.js + Express + MongoDB** (backend).
+A complete full-stack application built with **Flutter** (frontend) and **Node.js + Express + MongoDB** (backend).
 
 ---
 
