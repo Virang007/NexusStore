@@ -1,0 +1,165 @@
+===================================================
+🛍️ E-COMMERCE API ENDPOINTS & SIMPLE FLOW
+===================================================
+Base URL: http://localhost:3000
+
+---------------------------------------------------
+0a. REGISTER
+---------------------------------------------------
+What it does: Registers a new user and returns a unique user_id.
+Method: POST
+URL: http://localhost:3000/register
+
+Request Body (JSON):
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "secretpassword"
+}
+
+Response Example:
+{
+  "success": true,
+  "user_id": "user_1ab2c3d4"
+}
+
+---------------------------------------------------
+0b. LOGIN
+---------------------------------------------------
+What it does: Authenticates an existing user and returns their user_id.
+Method: POST
+URL: http://localhost:3000/login
+
+Request Body (JSON):
+{
+  "email": "john@example.com",
+  "password": "secretpassword"
+}
+
+Response Example:
+{
+  "success": true,
+  "user_id": "user_1ab2c3d4"
+}
+
+---------------------------------------------------
+1. GET PRODUCTS
+---------------------------------------------------
+What it does: Fetches all available products from the database.
+Method: GET
+URL: http://localhost:3000/products
+
+Response Example:
+[
+  {
+    "id": "1",
+    "name": "Wireless Mouse",
+    "price": 15.99,
+    "description": "Ergonomic wireless mouse with smooth tracking.",
+    "category": "Electronics",
+    "in_stock": true,
+    "tags": ["popular", "budget"],
+    "image": "https://picsum.photos/200?random=2"
+  },
+  ...
+]
+
+---------------------------------------------------
+2. ADD ITEM TO CART
+---------------------------------------------------
+What it does: Adds a specific product and quantity to a user's temporary cart.
+Method: POST
+URL: http://localhost:3000/cart
+
+Request Body (JSON):
+{
+  "user_id": "u1",
+  "product_id": "1",
+  "quantity": 2
+}
+
+Response Example:
+{
+  "success": true
+}
+
+---------------------------------------------------
+3. VIEW CURRENT CART
+---------------------------------------------------
+What it does: Retrieves all items currently in the user's cart, fetching updated names/prices and calculating the total.
+Method: GET
+URL: http://localhost:3000/cart/u1
+(Note: Replace 'u1' with the user_id used when adding to cart)
+
+Response Example:
+{
+  "user_id": "u1",
+  "items": [
+    {
+      "product_id": "1",
+      "name": "Wireless Mouse",
+      "price": 15.99,
+      "quantity": 2
+    }
+  ],
+  "total": 31.98
+}
+
+---------------------------------------------------
+4. PLACE ORDER
+---------------------------------------------------
+What it does: Completes the transaction. The server prints the order to the console and permanently clears the exact user's cart.
+Method: POST
+URL: http://localhost:3000/order
+
+Request Body (JSON):
+{
+  "user_id": "u1"
+}
+
+Response Example:
+{
+  "success": true,
+  "message": "Order placed"
+}
+
+
+===================================================
+🚀 HOW TO TEST THE FULL FLOW 
+===================================================
+You can test this using tools like Postman, Thunder Client, or cURL. 
+
+Step 1: Register a new account.
+        Send POST http://localhost:3000/register
+        Body: { "name": "John Doe", "email": "john@test.com", "password": "pass" }
+        Note down the user_id (e.g., "user_1ab2c3d4").
+
+Step 2: Login (if already registered).
+        Send POST http://localhost:3000/login
+        Body: { "email": "john@test.com", "password": "pass" }
+        Ensure you get the `user_id`. Use this id instead of "u1" in following steps.
+
+Step 3: Check available items.
+        Send GET http://localhost:3000/products. 
+        Note down an item's id (e.g., "1").
+
+Step 4: Add it to the cart.
+        Send POST http://localhost:3000/cart 
+        Body: { "user_id": "u1", "product_id": "1", "quantity": 2 }
+
+Step 3: Add another item to the cart!
+        Send POST http://localhost:3000/cart 
+        Body: { "user_id": "u1", "product_id": "2", "quantity": 1 }
+
+Step 4: View the total cart. 
+        Send GET http://localhost:3000/cart/u1. 
+        Notice how it fetched the real prices from the database for items "1" and "2" and added them up perfectly.
+
+Step 5: Place the order.
+        Send POST http://localhost:3000/order
+        Body: { "user_id": "u1" }
+        Check your Node.js console/terminal running the server. You'll see the contents printed!
+
+Step 6: Ensure cart is cleared.
+        Send GET http://localhost:3000/cart/u1. 
+        It will now be completely empty. The order is fulfilled!
